@@ -37,25 +37,28 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
       - name: Build Release APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
 
       - name: Build Release Bundle (AAB)
         run: |
           cd android
-          ./gradlew bundleRelease
+          ./gradlew bundleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/*.apk
 
       - name: Upload Bundle
         uses: actions/upload-artifact@v4
         with:
           name: app-release-bundle
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          path: android/app/build/outputs/bundle/release/*.aab
