@@ -11,6 +11,8 @@
     "cap:add-android": "npx cap add android",
     "cap:open-android": "npx cap open android",
     "android:build": "npm run build && npx cap sync android",
+    "android:apk": "npm run android:build && cd android && ./gradlew assembleRelease",
+    "android:bundle": "npm run android:build && cd android && ./gradlew bundleRelease",
     "icons:generate": "npx capacitor-assets generate --android"
   },
   "dependencies": {
