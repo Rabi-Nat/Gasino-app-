@@ -37,8 +37,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.12
-          cache-disabled: true
+          gradle-version: 8.14.3
+          cache-disabled: false
+          wrapper-validation-enabled: false
 
       - name: Build Release APK
         run: |
