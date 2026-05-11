@@ -22,9 +22,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Icons
-        run: npm run icons:generate
-
       - name: Build web app
         run: npm run build
 
@@ -37,28 +34,21 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Fix Corrupt Gradle Wrapper
-        run: |
-          cd android
-          # The existing jar is corrupt, so we remove it and let system gradle regenerate it
-          rm gradle/wrapper/gradle-wrapper.jar
-          gradle wrapper
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          cache-disabled: false
+          gradle-version: 8.2.1
 
       - name: Build Release APK
         run: |
           cd android
-          chmod +x gradlew
-          ./gradlew assembleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
+          # We use the gradle installed by the action instead of ./gradlew
+          gradle assembleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
 
       - name: Build Release Bundle (AAB)
         run: |
           cd android
-          ./gradlew bundleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
+          gradle bundleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
