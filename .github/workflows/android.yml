@@ -37,12 +37,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 8.2.1
+          gradle-version: 8.12
+          cache-disabled: true
 
       - name: Build Release APK
         run: |
           cd android
-          # We use the gradle installed by the action instead of ./gradlew
           gradle assembleRelease -PMYAPP_RELEASE_STORE_FILE=my-release-key.keystore -PMYAPP_RELEASE_KEY_ALIAS=my-key-alias -PMYAPP_RELEASE_STORE_PASSWORD=gasino1234 -PMYAPP_RELEASE_KEY_PASSWORD=gasino1234
 
       - name: Build Release Bundle (AAB)
