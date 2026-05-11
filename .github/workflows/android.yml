@@ -37,8 +37,17 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Fix Corrupt Gradle Wrapper
+        run: |
+          cd android
+          # The existing jar is corrupt, so we remove it and let system gradle regenerate it
+          rm gradle/wrapper/gradle-wrapper.jar
+          gradle wrapper
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-disabled: false
 
       - name: Build Release APK
         run: |
