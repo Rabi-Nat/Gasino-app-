@@ -22,8 +22,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+
+
       - name: Build web app
         run: npm run build
+
+      - name: Generate Icons
+        run: npm run icons:generate
 
       - name: Sync Capacitor
         run: npx cap sync android
