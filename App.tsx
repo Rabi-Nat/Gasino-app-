@@ -35,7 +35,7 @@ const App: React.FC = () => {
     { id: 'meter' as TabId, label: 'مشخصات کنتور', icon: Gauge, component: MeterSpecs },
     { id: 'valve' as TabId, label: 'فواصل شیرآلات', icon: Ruler, component: ValveInstallation },
     { id: 'safety' as TabId, label: 'فواصل ایمنی', icon: ShieldCheck, component: ApplianceDistance },
-    { id: 'price' as TabId, label: 'تعرفه ۱۴۰۴', icon: Banknote, component: PriceList },
+    { id: 'price' as TabId, label: 'تعرفه 1405', icon: Banknote, component: PriceList },
     { id: 'contact' as TabId, label: 'تماس با ما', icon: MessageSquare, component: ContactUs },
   ];
 
